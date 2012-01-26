@@ -14,8 +14,15 @@ module Bandit
         alt ||= cookies.signed[cookiename]
         unless alt.nil?
           Bandit.get_experiment(exp).convert!(alt, count)
-          # delete cookie so we don't double track
           cookies.delete(cookiename)
+        end
+      end
+
+      def bandit_final_convert!(exp, alt=nil, count=1)
+        cookiename = "bandit_#{exp}".intern
+        alt ||= cookies.signed[cookiename]
+        unless alt.nil?
+          Bandit.get_experiment(exp).convert!(alt, count)
         end
       end
     end
