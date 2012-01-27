@@ -16,7 +16,7 @@ module Bandit
         value = params[name].nil? ? cookies.signed[name] : params[name]
 
         # choose with default, and set cookie
-        cookies.signed[name] = Bandit.get_experiment(exp).choose(value)
+        cookies.permanent.signed[name] = Bandit.get_experiment(exp).choose(value)
       end
     end
 
