@@ -21,7 +21,8 @@ module Bandit
       def bandit_final_convert!(exp, alt=nil, count=1)
         cookiename = "bandit_#{exp}".intern
         alt ||= cookies.signed[cookiename]
-        unless alt.nil?
+        unless alt.nil? or cookies.signed[cookiename+"_converted"]
+          cookies.permanent.signed[cookiename+"_converted"] = "true"
           Bandit.get_experiment(exp).convert!(alt, count)
         end
       end
