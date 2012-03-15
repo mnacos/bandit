@@ -4,11 +4,11 @@ require "bandit/version"
 Gem::Specification.new do |s|
   s.name        = "bandido"
   s.version     = Bandit::VERSION
-  s.authors     = ["Brian Muller"]
-  s.email       = ["brian.muller@livingsocial.com"]
+  s.authors     = ["Michael Nacos"] # original author is Brian Muller, this is a fork
+  s.email       = ["m.nacos@gmail.com"]
   s.homepage    = "https://github.com/mnacos/bandit"
   s.summary     = "Multi-armed bandit testing in rails"
-  s.description = "Bandit-clone, with support for persistent cookies"
+  s.description = "Bandit-clone, more options around cookies (simple/session/sticky)"
   s.rubyforge_project = "bandido"
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

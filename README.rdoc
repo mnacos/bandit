@@ -1,3 +1,21 @@
+= bandido
+
+Bandido is a fork of the bandit gem, the README for which you may find below this section. It still uses the same code namespace as bandit (Bandit), should be compatible with projects already using bandit. If you run into any problems because of this, consider adding:
+
+    require 'bandit'
+
+in your bandit initializer, e.g. config/initializers/bandit.rb
+
+Bandido provides more control over cookies, participant counts and the like. Instead of calling bandit_choose and bandit_convert! in your code, you may use the following method combinations:
+
+    bandit_simple_choose/bandit_simple_convert!   (no cookies involved, same as raw impressions)
+    bandit_session_choose/bandit_session_convert! (session cookie, same as bandit_choose with a fix)
+    bandit_sticky_choose/bandit_sticky_convert!   (persistent cookies)
+
+bandit_sticky_convert! creates a _converted cookie which stops additional conversions from being counted. For example, if you are collecting email addresses, a user may enter their email address more than once, but you may want to count all these attempts as one conversion.
+
+You may also use the bandit_sticky_choose/bandit_session_convert! combination if you wish to use persistent cookies but allow each user to convert multiple times. This way visitors are always presented with the same alternative until they convert, at which point they are presented with another and so on.
+
 = bandit
 
 Bandit is a multi-armed bandit optimization framework for Rails.  It provides an alternative to A/B testing in Rails.  For background and a comparison with A/B testing, see the whybandit.rdoc document or the blog post here[http://findingscience.com/rails/vanity/statistics/testing/2011/11/12/bandit:-a-b-testing-alternative-for-rails.html].

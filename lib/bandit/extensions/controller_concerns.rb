@@ -3,22 +3,28 @@ require 'active_support/concern'
 module Bandit
   module ControllerConcerns
     extend ActiveSupport::Concern
-  
+
     module ClassMethods
-      
     end
 
     module InstanceMethods
-      def bandit_convert!(exp, alt=nil, count=1)
+      # look mum, no cookies
+      def bandit_simple_convert!(exp, alt, count=1)
+        Bandit.get_experiment(exp).convert!(alt, count)
+      end
+
+      # expects a session cookie, deletes it, will convert again
+      def bandit_session_convert!(exp, alt=nil, count=1)
         cookiename = "bandit_#{exp}".intern
         alt ||= cookies.signed[cookiename]
-        unless alt.nil?
+        unless alt.nil? or cookies.signed[cookiename_converted]
           Bandit.get_experiment(exp).convert!(alt, count)
           cookies.delete(cookiename)
         end
       end
 
-      def bandit_final_convert!(exp, alt=nil, count=1)
+      # creates a _converted cookie, prevents multiple conversions
+      def bandit_sticky_convert!(exp, alt=nil, count=1)
         cookiename = "bandit_#{exp}".intern
         cookiename_converted = "bandit_#{exp}_converted".intern
         alt ||= cookies.signed[cookiename]
@@ -27,7 +33,16 @@ module Bandit
           Bandit.get_experiment(exp).convert!(alt, count)
         end
       end
-    end
 
+      # FIXME: deprecated (for compatibility with bandit gem & older bandido versions)
+      # ------------------------------------------------------------------------------
+      def bandit_convert!(exp, alt=nil, count=1)
+        bandit_session_convert!(exp, alt, count)
+      end
+
+      def bandit_final_convert!(exp, alt=nil, count=1)
+        bandit_sticky_convert!(exp, alt, count)
+      end
+    end
   end
 end
