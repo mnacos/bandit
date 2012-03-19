@@ -16,6 +16,7 @@ module Bandit
       # expects a session cookie, deletes it, will convert again
       def bandit_session_convert!(exp, alt=nil, count=1)
         cookiename = "bandit_#{exp}".intern
+        cookiename_converted = "bandit_#{exp}_converted".intern
         alt ||= cookies.signed[cookiename]
         unless alt.nil? or cookies.signed[cookiename_converted]
           Bandit.get_experiment(exp).convert!(alt, count)

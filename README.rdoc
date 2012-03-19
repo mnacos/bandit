@@ -16,6 +16,8 @@ bandit_sticky_convert! creates a _converted cookie which stops additional conver
 
 You may also use the bandit_sticky_choose/bandit_session_convert! combination if you wish to use persistent cookies but allow each user to convert multiple times. This way visitors are always presented with the same alternative until they convert, at which point they are presented with another and so on.
 
+Finally, if you use bandit_simple_convert!, please remember the second argument (alternative) is not optional, as we have no cookie to read from.
+
 = bandit
 
 Bandit is a multi-armed bandit optimization framework for Rails.  It provides an alternative to A/B testing in Rails.  For background and a comparison with A/B testing, see the whybandit.rdoc document or the blog post here[http://findingscience.com/rails/vanity/statistics/testing/2011/11/12/bandit:-a-b-testing-alternative-for-rails.html].
